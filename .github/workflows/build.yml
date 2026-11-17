@@ -113,7 +113,7 @@ jobs:
             -DANDROID_PLATFORM=android-21 \
             -DWITH_RSDK=OFF \
             -DCMAKE_BUILD_TYPE=Release \
-            -DRETRO_REVISION=3
+            -DRETRO_REVISION=2
           cmake --build build_android --parallel
       - name: Move artifacts
         run: |
