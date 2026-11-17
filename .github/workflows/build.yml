@@ -1,6 +1,9 @@
 name: Build Mania
 
-on:
+on:  
+  workflow_dispatch:
+  
+
   push:
     paths:
       - dependencies/**
