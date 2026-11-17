@@ -6127,7 +6127,26 @@ void Player_JumpAbility_Sonic(void)
 #if GAME_VERSION == VER_100
                 && !Player_TryTransform(self, SaveGame_GetSaveRAM()->collectedEmeralds)
 #endif
-            ) {
+            ) {                if (self->superState == SUPERSTATE_SUPER) {
+                    self->jumpAbilityState = 1;
+                    self->onGround         = false;
+                    self->velocity.y       = 0;
+                    RSDK.SetSpriteAnimation(self->aniFrames, ANI_DASH, &self->animator, false, 0);
+                    if (self->up)
+                        self->velocity.y = -0x60000;
+                    else if (self->down)
+                        self->velocity.y = 0x60000;
+                    if (self->left) {
+                        self->direction  = FLIP_X;
+                        self->velocity.x = -0x80000;
+                    }
+                    else if (self->right) {
+                        self->direction  = FLIP_NONE;
+                        self->velocity.x = 0x80000;
+                    }
+                    return;
+                }
+
                 EntityShield *shield = RSDK_GET_ENTITY(Player->playerCount + RSDK.GetEntitySlot(self), Shield);
                 if (self->invincibleTimer) {
                     if (shield->classID != Shield->classID || shield->shieldAnimator.animationID != SHIELDANI_INSTA) {
